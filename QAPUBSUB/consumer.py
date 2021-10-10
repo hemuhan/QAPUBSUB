@@ -26,7 +26,7 @@ class subscriber(base_ps):
                                       durable=False,
                                       auto_delete=False)
         self.queue = self.channel.queue_declare(
-            queue=self.queue_name, auto_delete=True, exclusive=False).method.queue
+            queue=self.queue_name, auto_delete=False, exclusive=False).method.queue
         self.channel.queue_bind(queue=self.queue, exchange=self.exchange,
                                 routing_key='qa_routing')          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
@@ -81,7 +81,7 @@ class subscriber_routing(base_ps):
                                       auto_delete=False)
 
         self.queue = self.channel.queue_declare(
-            queue=self.queue_name, auto_delete=True, exclusive=False, durable=self.durable).method.queue
+            queue=self.queue_name, auto_delete=False, exclusive=False, durable=self.durable).method.queue
         self.channel.queue_bind(queue=self.queue, exchange=self.exchange,
                                 routing_key=self.routing_key)          # 队列名采用服务端分配的临时队列
         # self.channel.basic_qos(prefetch_count=1)
@@ -140,7 +140,7 @@ class subscriber_topic(base_ps):
                                       durable=self.durable,
                                       auto_delete=False)
         self.queue = self.channel.queue_declare(
-            queue=self.queue_name, auto_delete=True, durable=self.durable, exclusive=False).method.queue
+            queue=self.queue_name, auto_delete=False, durable=self.durable, exclusive=False).method.queue
         self.channel.queue_bind(queue=self.queue, exchange=self.exchange,
                                 routing_key=self.routing_key)
         self.c = []
